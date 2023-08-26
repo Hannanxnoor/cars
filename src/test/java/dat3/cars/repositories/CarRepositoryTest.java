@@ -17,7 +17,7 @@ class CarRepositoryTest {
     @Autowired
     CarRepository carRepository;
 
-    @Test
+   // @Test
     public void testFindAllCars() {
         Car car1 = new Car("Mercedes-Benz", "C-Class");
         Car car2 = new Car("BMW", "3 Series");

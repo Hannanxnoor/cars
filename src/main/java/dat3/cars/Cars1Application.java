@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 public class Cars1Application {
 
     public static void main(String[] args) {
+        SpringApplication.run(Cars1Application.class);
     }
 
 

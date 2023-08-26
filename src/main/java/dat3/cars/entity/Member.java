@@ -1,11 +1,14 @@
 package dat3.cars.entity;
 
+import dat3.security.entity.UserWithRoles;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,22 +17,16 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name="Member")
 
-public class Member {
- @Id
- @Column(name = "username")
-String user;
-
- @Column(name = "email")
- private String email;
-
- @Column(name = "password")
- private String password;
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "USER_TYPE")
+public class Member extends UserWithRoles {
 
  @Column(name = "first_name")
  private String first_name;
 
  @Column(name = "last_name")
  private String last_name;
+
 
  @Column(name = "street")
  private String street;
@@ -41,10 +38,10 @@ String user;
  private String zip;
 
  @Column(name = "approved")
- private String approved;
+ private boolean approved;
 
  @Column(name = "ranking")
- private String ranking;
+ private int ranking;
 
  @Column(name = "created")
  private LocalDateTime created;
@@ -52,10 +49,17 @@ String user;
  @Column(name = "last_edited")
  private LocalDateTime lastEdited;
 
+ @OneToMany(mappedBy = "member")
+ private List<Reservation> reservations;
+
+ public void addReservation(Reservation reservation){
+  if(reservation != null){
+   reservations = new ArrayList<>();
+  }
+  reservations.add(reservation);
+ }
  public Member(String user, String email, String password, String first_name, String last_name, String street, String city, String zip) {
-  this.user = user;
-  this.email = email;
-  this.password = password;
+  super(user,password,email);
   this.first_name = first_name;
   this.last_name = last_name;
   this.street = street;

@@ -43,8 +43,5 @@ public class Car {
         this.model = model;
     }
 
-    public String getBrand() {
-        return brand;
-    }
 
 }
